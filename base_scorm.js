@@ -158,7 +158,7 @@ function GetParam( name ) {
 }
 
 function SCORM_INIT() {
-
+  console.info("TRYING TO FIND THE LMS API")
   // Get the LMS SCORM API.
   var lmsAPI = getAPI();
   console.log(lmsAPI);
@@ -167,6 +167,7 @@ function SCORM_INIT() {
   if (lmsAPI != null)
   {
     var action = getPassedParm("action");
+    console.log("passed Param: " + action);
     if (action == "")
       action = "init";
 
@@ -240,7 +241,9 @@ function SCORM_INIT() {
     }
     else if (action == "error")
     {
+      console.warn("LMS reported an ERROR")
       var errorCode = getPassedParm("code");
+      console.warn("Error Code:" + errorCode);
       var errorMessage = null;
 
       if (errorCode == "1001")
@@ -252,20 +255,22 @@ function SCORM_INIT() {
       {
         errorMessage = "Course: '" + getPassedParm("cid") + "' doesn't exist.";
       }
+      console.warn(errorMessage)
 
       document.write("Scitent Scorm error: (" + errorCode + ")\n" + errorMessage);
 
       lmsResult = lmsAPI.LMSFinish("");
+      console.log("Trying LMSFinish()");
       if (lmsResult == "false")
         // Couldn't finish via the LMS.
         alertScormError("LMSFinish()");
+        console.warn("Could not execute LMSFinish()");
     }
   }  
 }
 
 $(document).ready(function(){
   $("body").html("<h1>loading...</h1>");
-  $("body").html('<iframe src="//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=6F5RMU26D&lastname=Ruoto&firstname=Joe"></iframe>');
 
   var css = " \
   iframe { border: none; width: 100%; height: 100%; overflow: scroll;} \
@@ -277,6 +282,8 @@ $(document).ready(function(){
   $("head").append('<style type="text/css">' + css + '</style>');
 
   SCORM_INIT();
+
+  $("body").html('<iframe src="//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=6F5RMU26D&lastname=Ruoto&firstname=Joe"></iframe>');
 
 });
 
