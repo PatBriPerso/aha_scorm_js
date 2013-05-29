@@ -281,7 +281,7 @@ $(document).ready(function(){
   // $("head").append('<link rel="stylesheet" href="//raw.https://raw.github.com/phoenix-scitent/aha_scorm_js/master/scorm.css">')
   $("head").append('<style type="text/css">' + css + '</style>');
 
-  SCORM_INIT();
+  // SCORM_INIT();
 
   $("body").html('<iframe src="//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=6F5RMU26D&lastname=Ruoto&firstname=Joe"></iframe>');
 
