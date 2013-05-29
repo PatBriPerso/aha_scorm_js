@@ -1,7 +1,4 @@
-alert("timmy")
-
 $("body").html("<h1>loading...</h1>");
-$("body").html('<iframe src="http://www.w3schools.com"></iframe>');
 $("iframe").css("border", "none").css("width", "100%").css("height", "100%");
 
 
@@ -31,7 +28,9 @@ var ReturnUrl = window.location.href.substring(0,window.location.href.indexOf("s
 function getScores()
 {
 		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgId="+orgID+"&courseID="+courseID+"&extID="+userID+"&returnUrl="+ReturnUrl;
-		window.location.replace(getScoresUrl);
+		// window.location.replace(getScoresUrl);
+    $("body").html('<iframe src="' + getScoresUrl + '"></iframe>');
+
 }
 
 function checkCourseWindow()
@@ -194,7 +193,9 @@ if (lmsAPI != null)
 	// wait loop to check for when courseWindow closes
     // when this happens get scores from Scorm Server Url
     timerId = setInterval(checkCourseWindow, 1000);
-    setTimeout('courseWindow=window.open(regStuUrl,"", "status,resizable,scrollbars")', 5000);
+    $("body").html('<iframe src="' + regStuUrl + '"></iframe>');
+
+    // setTimeout('courseWindow=window.open(regStuUrl,"", "status,resizable,scrollbars")', 5000);
     }
   }
   else if (action == "exit")
