@@ -2,6 +2,7 @@ alert("timmy")
 
 $("body").html("<h1>loading...</h1>");
 $("body").html('<iframe src="http://www.w3schools.com"></iframe>');
+$("iframe").css("border", "none");
 // change courseInNewWindow to false if the LMS plays the course without popping a new window.
 var courseInNewWindow=true;
 
