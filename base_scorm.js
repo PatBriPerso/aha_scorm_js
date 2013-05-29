@@ -177,12 +177,11 @@ function SCORM_INIT() {
     if (action == "init")
     {
       lmsResult = lmsAPI.LMSInitialize("");
-      if (lmsResult == "false")
+      if (lmsResult == "false"){
         // Couldn't initialize via the LMS.
         console.warn("Could not Init the LMS")
-        alertScormError("LMSInitialize()");
-      else
-      {
+        alertScormError("LMSInitialize()");        
+      } else {
         console.info("Could Init the LMS")
         // Get the userId (i.e. Student Id) from the LMS
         userId = lmsAPI.LMSGetValue("cmi.core.student_id");
