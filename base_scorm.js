@@ -1,6 +1,4 @@
 $("body").html("<h1>loading...</h1>");
-$("iframe").css("border", "none").css("width", "100%").css("height", "100%");
-
 
 var css = " \
 iframe { border: none; width: 100%; height: 100%; overflow: scroll;} \
