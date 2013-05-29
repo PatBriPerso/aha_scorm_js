@@ -3,6 +3,7 @@ $("body").html("<h1>loading...</h1>");
 var css = " \
 iframe { border: none; width: 100%; height: 100%; overflow: scroll;} \
 body {margin: 0; padding: 0; } \
+h1 {font-family: 'Helvetica'; font-weight: bold; font-size: 36pt;}
 "
 
 // $("head").append('<link rel="stylesheet" href="//raw.https://raw.github.com/phoenix-scitent/aha_scorm_js/master/scorm.css">')
