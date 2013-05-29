@@ -160,7 +160,7 @@ function GetParam( name ) {
 function SCORM_INIT() {
   console.info("TRYING TO FIND THE LMS API")
   // Get the LMS SCORM API.
-  var lmsAPI = getAPI();
+  window.lmsAPI = getAPI();
   console.log(lmsAPI);
   var lmsResult;
 
