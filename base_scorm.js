@@ -1,3 +1,5 @@
+
+///////// CONSOLE LOGGING ALA Twitter!
 if ( ! window.console ) {
   (function() {
     var names = ["log", "debug", "info", "warn", "error",
@@ -12,17 +14,8 @@ if ( ! window.console ) {
 }
 
 
-$("body").html("<h1>loading...</h1>");
-$("body").html('<iframe src="//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=6F5RMU26D&lastname=Ruoto&firstname=Joe"></iframe>');
 
-var css = " \
-iframe { border: none; width: 100%; height: 100%; overflow: scroll;} \
-body {margin: 0; padding: 0; } \
-h1 {font-family: 'Helvetica'; font-weight: bold; font-size: 36pt;} \
-"
-
-// $("head").append('<link rel="stylesheet" href="//raw.https://raw.github.com/phoenix-scitent/aha_scorm_js/master/scorm.css">')
-$("head").append('<style type="text/css">' + css + '</style>');
+/////////////// SETUP VARIABLES
 
 // change courseInNewWindow to false if the LMS plays the course without popping a new window.
 var courseInNewWindow=true;
@@ -164,128 +157,148 @@ function GetParam( name ) {
 		return results[1];
 }
 
+function SCORM_INIT() {
 
-// Get the LMS SCORM API.
-var lmsAPI = getAPI();
-console.log(lmsAPI);
-var lmsResult;
+  // Get the LMS SCORM API.
+  var lmsAPI = getAPI();
+  console.log(lmsAPI);
+  var lmsResult;
 
-if (lmsAPI != null)
-{
-  var action = getPassedParm("action");
-  if (action == "")
-    action = "init";
-
-  if (action == "init")
+  if (lmsAPI != null)
   {
-    lmsResult = lmsAPI.LMSInitialize("");
-    if (lmsResult == "false")
-      // Couldn't initialize via the LMS.
-      alertScormError("LMSInitialize()");
-    else
+    var action = getPassedParm("action");
+    if (action == "")
+      action = "init";
+
+    if (action == "init")
     {
-      // Get the userId (i.e. Student Id) from the LMS
-      userId = lmsAPI.LMSGetValue("cmi.core.student_id");
-      if (lmsAPI.LMSGetLastError() != 0)
-        alertScormError("LMSGetValue(\"cmi.core.student_id\")");
+      lmsResult = lmsAPI.LMSInitialize("");
+      if (lmsResult == "false")
+        // Couldn't initialize via the LMS.
+        alertScormError("LMSInitialize()");
+      else
+      {
+        // Get the userId (i.e. Student Id) from the LMS
+        userId = lmsAPI.LMSGetValue("cmi.core.student_id");
+        if (lmsAPI.LMSGetLastError() != 0)
+          alertScormError("LMSGetValue(\"cmi.core.student_id\")");
 
-      // Get the user name (i.e. Student name) from the LMS
-      var userName = lmsAPI.LMSGetValue("cmi.core.student_name");
-      if (lmsAPI.LMSGetLastError() != 0)
-        alertScormError("LMSGetValue(\"cmi.core.student_name\")");
+        // Get the user name (i.e. Student name) from the LMS
+        var userName = lmsAPI.LMSGetValue("cmi.core.student_name");
+        if (lmsAPI.LMSGetLastError() != 0)
+          alertScormError("LMSGetValue(\"cmi.core.student_name\")");
 
-      var nameArray = userName.split(",");
+        var nameArray = userName.split(",");
 
-      var regStuUrl = scormSrvUrl +
-        "?func=get_param&" +
-        "courseID=" + courseId +
-        "&orgID=" + orgId +
-        "&extID=" + userId +
-	    "&orgKey=" + orgKey +
-        "&lastname=" + escape(trim(nameArray[0])) +
-        "&firstname=" + escape(trim(nameArray[1]));
+        var regStuUrl = scormSrvUrl +
+          "?func=get_param&" +
+          "courseID=" + courseId +
+          "&orgID=" + orgId +
+          "&extID=" + userId +
+        "&orgKey=" + orgKey +
+          "&lastname=" + escape(trim(nameArray[0])) +
+          "&firstname=" + escape(trim(nameArray[1]));
 
-	// wait loop to check for when courseWindow closes
-    // when this happens get scores from Scorm Server Url
-    timerId = setInterval(checkCourseWindow, 1000);
-    $("body").html('<iframe src="' + regStuUrl + '"></iframe>');
+    // wait loop to check for when courseWindow closes
+      // when this happens get scores from Scorm Server Url
+      timerId = setInterval(checkCourseWindow, 1000);
+      $("body").html('<iframe src="' + regStuUrl + '"></iframe>');
 
-    // setTimeout('courseWindow=window.open(regStuUrl,"", "status,resizable,scrollbars")', 5000);
+      // setTimeout('courseWindow=window.open(regStuUrl,"", "status,resizable,scrollbars")', 5000);
+      }
     }
-  }
-  else if (action == "exit")
-  {
-    // The SCO is exiting.
-//    var lessonLocation = getPassedParm("Lesson_Location");
-    var lessonStatus = getPassedParm("Lesson_Status");
-    var score = getPassedParm("Score");
-
-//	var lessonLocation = lmsAPI.LMSGetValue("cmi.core.lesson_location");
-
-    lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_status",GetParam('Lesson_Status'));
-    if (lmsResult == "false")
-      alertScormError("LMSSetValue(\"cmi.core.lesson_status\",\"" + GetParam('Lesson_Status') + "\")");
-
-//    lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_location",GetParam('Lesson_Location"));
-//    if (lmsResult == "false")
-//      alertScormError("LMSSetValue(\"cmi.core.lesson_location\",\"" + GetParam('Lesson_Location') + "\")");
-
-    lmsResult = lmsAPI.LMSSetValue("cmi.core.score.raw",GetParam('Score'));
-    if (lmsResult == "false")
-	    alertScormError("LMSSetValue(\"cmi.core.score.raw\",\"" + GetParam('Score') + "\")");
-
-	lessonStatus = lmsAPI.LMSGetValue("cmi.core.lesson_status");
-	score = lmsAPI.LMSGetValue("cmi.core.score.raw");
-
-    lmsResult = lmsAPI.LMSFinish("");
-    if (lmsResult == "false")
-      // Couldn't finish via the LMS.
-      alertScormError("LMSFinish()");
-
-//	alert("Lesson Status: " + lessonStatus + "\nScore: " + score);
-  }
-  else if (action == "error")
-  {
-    var errorCode = getPassedParm("code");
-    var errorMessage = null;
-
-    if (errorCode == "1001")
+    else if (action == "exit")
     {
-      errorMessage = "Unable to retrieve score for user '" + getPassedParm("stuid") + "'.\nIt appears that the course was not completed.";
+      // The SCO is exiting.
+  //    var lessonLocation = getPassedParm("Lesson_Location");
+      var lessonStatus = getPassedParm("Lesson_Status");
+      var score = getPassedParm("Score");
 
+  //  var lessonLocation = lmsAPI.LMSGetValue("cmi.core.lesson_location");
+
+      lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_status",GetParam('Lesson_Status'));
+      if (lmsResult == "false")
+        alertScormError("LMSSetValue(\"cmi.core.lesson_status\",\"" + GetParam('Lesson_Status') + "\")");
+
+  //    lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_location",GetParam('Lesson_Location"));
+  //    if (lmsResult == "false")
+  //      alertScormError("LMSSetValue(\"cmi.core.lesson_location\",\"" + GetParam('Lesson_Location') + "\")");
+
+      lmsResult = lmsAPI.LMSSetValue("cmi.core.score.raw",GetParam('Score'));
+      if (lmsResult == "false")
+        alertScormError("LMSSetValue(\"cmi.core.score.raw\",\"" + GetParam('Score') + "\")");
+
+    lessonStatus = lmsAPI.LMSGetValue("cmi.core.lesson_status");
+    score = lmsAPI.LMSGetValue("cmi.core.score.raw");
+
+      lmsResult = lmsAPI.LMSFinish("");
+      if (lmsResult == "false")
+        // Couldn't finish via the LMS.
+        alertScormError("LMSFinish()");
+
+  //  alert("Lesson Status: " + lessonStatus + "\nScore: " + score);
     }
-    else if (errorCode == "1002")
+    else if (action == "error")
     {
-      errorMessage = "Course: '" + getPassedParm("cid") + "' doesn't exist.";
+      var errorCode = getPassedParm("code");
+      var errorMessage = null;
+
+      if (errorCode == "1001")
+      {
+        errorMessage = "Unable to retrieve score for user '" + getPassedParm("stuid") + "'.\nIt appears that the course was not completed.";
+
+      }
+      else if (errorCode == "1002")
+      {
+        errorMessage = "Course: '" + getPassedParm("cid") + "' doesn't exist.";
+      }
+
+      document.write("Scitent Scorm error: (" + errorCode + ")\n" + errorMessage);
+
+      lmsResult = lmsAPI.LMSFinish("");
+      if (lmsResult == "false")
+        // Couldn't finish via the LMS.
+        alertScormError("LMSFinish()");
     }
-
-    document.write("Scitent Scorm error: (" + errorCode + ")\n" + errorMessage);
-
-    lmsResult = lmsAPI.LMSFinish("");
-    if (lmsResult == "false")
-      // Couldn't finish via the LMS.
-      alertScormError("LMSFinish()");
-  }
+  }  
 }
 
-// *********************************** Instruction Text **************************************
+$(document).ready(function(){
+  $("body").html("<h1>loading...</h1>");
+  $("body").html('<iframe src="//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=6F5RMU26D&lastname=Ruoto&firstname=Joe"></iframe>');
 
-function bodyInstructionText() {
-  var instructions="<h2>Welcome!</h2> \
-  Your course will automatically launch in a separate window. \
-  <br /><br /> \
-  <font style='color:red; font-weight:bold;'>Please do not close this window until you have finished using the course.</font>";
+  var css = " \
+  iframe { border: none; width: 100%; height: 100%; overflow: scroll;} \
+  body {margin: 0; padding: 0; } \
+  h1 {font-family: 'Helvetica'; font-weight: bold; font-size: 36pt;} \
+  "
 
-  if (action == "exit")
-  {
-    instructions="<h2>Thank you!</h2> \
-    Thank you for using our course. We hope it was a rich learning experience for you.<br /> \
-    Your score was: " + score + " (" + lessonStatus + ")";
-    if (courseInNewWindow) instructions+="<br /><font style='color:green; font-weight:bold;'>You may now safely close this window.</font>";
-  }
+  // $("head").append('<link rel="stylesheet" href="//raw.https://raw.github.com/phoenix-scitent/aha_scorm_js/master/scorm.css">')
+  $("head").append('<style type="text/css">' + css + '</style>');
 
-  $("body").html(instructions);
+  SCORM_INIT();
 
-}
+});
 
-// *******************************************************************************************
+
+
+///// OLD INSTRUCTIONS FOR POPUP WINDOW
+/////
+// function bodyInstructionText() {
+//   var instructions="<h2>Welcome!</h2> \
+//   Your course will automatically launch in a separate window. \
+//   <br /><br /> \
+//   <font style='color:red; font-weight:bold;'>Please do not close this window until you have finished using the course.</font>";
+
+//   if (action == "exit")
+//   {
+//     instructions="<h2>Thank you!</h2> \
+//     Thank you for using our course. We hope it was a rich learning experience for you.<br /> \
+//     Your score was: " + score + " (" + lessonStatus + ")";
+//     if (courseInNewWindow) instructions+="<br /><font style='color:green; font-weight:bold;'>You may now safely close this window.</font>";
+//   }
+
+//   $("body").html(instructions);
+
+// }
+
