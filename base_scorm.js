@@ -1,4 +1,5 @@
-<!--
+alert("timmy")
+
 // change courseInNewWindow to false if the LMS plays the course without popping a new window.
 var courseInNewWindow=true;
 
@@ -254,4 +255,3 @@ if (action == "exit")
 	if (courseInNewWindow) instructions+="<br><font style='color:green; font-weight:bold;'>You may now safely close this window.</font>";
 }
 // *******************************************************************************************
-// -->
