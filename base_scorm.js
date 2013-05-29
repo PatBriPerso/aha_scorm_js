@@ -1,5 +1,7 @@
 alert("timmy")
 
+$("body").html("<h1>loading...</h1>");
+
 // change courseInNewWindow to false if the LMS plays the course without popping a new window.
 var courseInNewWindow=true;
 
