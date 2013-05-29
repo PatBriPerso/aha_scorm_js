@@ -18,7 +18,6 @@ var ReturnUrl = window.location.href.substring(0,window.location.href.indexOf("s
 function getScores()
 {
 		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgId="+orgID+"&courseID="+courseID+"&extID="+userID+"&returnUrl="+ReturnUrl;
-    alert(getScoresUrl)
 		window.location.replace(getScoresUrl);
 }
 
@@ -242,16 +241,16 @@ if (lmsAPI != null)
 
 // *********************************** Instruction Text **************************************
 
-var instructions="<h2>Welcome!</h2>" +
+window.instructions="<h2>Welcome!</h2>" +
 "Your course will automatically launch in a separate window." +
 "<BR><BR>" +
 "<font style='color:red; font-weight:bold;'>Please do not close this window until you have finished using the course.</font>";
 
 if (action == "exit")
 {
-	instructions="<h2>Thank you!</h2>" +
+	window.instructions="<h2>Thank you!</h2>" +
 	"Thank you for using our course. We hope it was a rich learning experience for you.<br>" +
 	"Your score was: " + score + " (" + lessonStatus + ")";
-	if (courseInNewWindow) instructions+="<br><font style='color:green; font-weight:bold;'>You may now safely close this window.</font>";
+	if (courseInNewWindow) window.instructions+="<br><font style='color:green; font-weight:bold;'>You may now safely close this window.</font>";
 }
 // *******************************************************************************************
