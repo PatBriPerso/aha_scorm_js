@@ -153,6 +153,7 @@ function GetParam( name ) {
 
 // Get the LMS SCORM API.
 var lmsAPI = getAPI();
+console.log(lmsAPI);
 var lmsResult;
 
 if (lmsAPI != null)
