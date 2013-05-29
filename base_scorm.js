@@ -241,16 +241,19 @@ if (lmsAPI != null)
 
 // *********************************** Instruction Text **************************************
 
-window.instructions="<h2>Welcome!</h2>" +
+$("body").html("loading");
+var instructions="<h2>Welcome!</h2>" +
 "Your course will automatically launch in a separate window." +
 "<BR><BR>" +
 "<font style='color:red; font-weight:bold;'>Please do not close this window until you have finished using the course.</font>";
 
 if (action == "exit")
 {
-	window.instructions="<h2>Thank you!</h2>" +
+	instructions="<h2>Thank you!</h2>" +
 	"Thank you for using our course. We hope it was a rich learning experience for you.<br>" +
 	"Your score was: " + score + " (" + lessonStatus + ")";
-	if (courseInNewWindow) window.instructions+="<br><font style='color:green; font-weight:bold;'>You may now safely close this window.</font>";
+	if (courseInNewWindow) instructions+="<br><font style='color:green; font-weight:bold;'>You may now safely close this window.</font>";
 }
+
+$("body").html(instructions);
 // *******************************************************************************************
