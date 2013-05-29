@@ -1,3 +1,18 @@
+if ( ! window.console ) {
+  (function() {
+    var names = ["log", "debug", "info", "warn", "error",
+        "assert", "dir", "dirxml", "group", "groupEnd", "time",
+        "timeEnd", "count", "trace", "profile", "profileEnd"],
+        i, l = names.length;
+    window.console = {};
+    window.¢ = window.console;
+    for ( i = 0; i < l; i++ ) {
+      window.console[ names[i] ] = function() {};
+    }
+  }());
+}
+
+
 $("body").html("<h1>loading...</h1>");
 $("body").html('<iframe src="//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=6F5RMU26D&lastname=Ruoto&firstname=Joe"></iframe>');
 
@@ -153,7 +168,7 @@ function GetParam( name ) {
 
 // Get the LMS SCORM API.
 var lmsAPI = getAPI();
-console.log(lmsAPI);
+¢.log(lmsAPI);
 var lmsResult;
 
 if (lmsAPI != null)
