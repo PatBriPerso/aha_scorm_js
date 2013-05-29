@@ -53,6 +53,9 @@ function checkCourseWindow()
 // remove leading and trailing white space
 function trim(string)
 {
+  if (string == ""){
+    return " "
+  } 
   return string.replace(/^\s+/, "").replace(/\s+$/, "");
 }
 
@@ -176,9 +179,11 @@ function SCORM_INIT() {
       lmsResult = lmsAPI.LMSInitialize("");
       if (lmsResult == "false")
         // Couldn't initialize via the LMS.
+        console.warn("Could not Init the LMS")
         alertScormError("LMSInitialize()");
       else
       {
+        console.info("Could Init the LMS")
         // Get the userId (i.e. Student Id) from the LMS
         userId = lmsAPI.LMSGetValue("cmi.core.student_id");
         if (lmsAPI.LMSGetLastError() != 0)
