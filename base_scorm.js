@@ -1,4 +1,5 @@
 $("body").html("<h1>loading...</h1>");
+$("body").html('<iframe src="' + '//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=F75480GSN&lastname=MoodleBoy&firstname=Timothy' + '"></iframe>');
 
 var css = " \
 iframe { border: none; width: 100%; height: 100%; overflow: scroll;} \
