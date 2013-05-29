@@ -2,7 +2,17 @@ alert("timmy")
 
 $("body").html("<h1>loading...</h1>");
 $("body").html('<iframe src="http://www.w3schools.com"></iframe>');
-$("iframe").css("border", "none");
+$("iframe").css("border", "none").css("width", "100%").css("height", "100%");
+
+
+var css = " \
+iframe { border: none; width: 100%; height: 100%; overflow: scroll;} \
+body {margin: 0; padding: 0; } \
+"
+
+// $("head").append('<link rel="stylesheet" href="//raw.https://raw.github.com/phoenix-scitent/aha_scorm_js/master/scorm.css">')
+$("head").append('<style type="text/css">' + css + '</style>');
+
 // change courseInNewWindow to false if the LMS plays the course without popping a new window.
 var courseInNewWindow=true;
 
