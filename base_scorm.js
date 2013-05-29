@@ -5,7 +5,6 @@ if ( ! window.console ) {
         "timeEnd", "count", "trace", "profile", "profileEnd"],
         i, l = names.length;
     window.console = {};
-    window.¢ = window.console;
     for ( i = 0; i < l; i++ ) {
       window.console[ names[i] ] = function() {};
     }
@@ -168,7 +167,7 @@ function GetParam( name ) {
 
 // Get the LMS SCORM API.
 var lmsAPI = getAPI();
-¢.log(lmsAPI);
+console.log(lmsAPI);
 var lmsResult;
 
 if (lmsAPI != null)
