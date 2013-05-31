@@ -146,19 +146,27 @@ function getPassedParm(parm,lowerCase)
   return lowerCase ? foundArray[1].toLowerCase() : foundArray[1];
 }
 
-function GetParam( name ) {
-	name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-	var regexS = "[\\?&]"+name+"=([^&#]*)";
-	var regex = new RegExp( regexS );
-	var results = regex.exec( window.location.href );
+// function GetParam( name ) {
+// 	name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+// 	var regexS = "[\\?&]"+name+"=([^&#]*)";
+// 	var regex = new RegExp( regexS );
+// 	var results = regex.exec( window.location.href );
 
-	if( results == null ){
-    console.log("GetParam("+name+") = --nada--")
-		return "";
-	} else {
-    console.log("GetParam("+name+") = " + results[1])
-		return results[1];
-  }
+// 	if( results == null ){
+//     console.log("GetParam("+name+") = --nada--")
+// 		return "";
+// 	} else {
+//     console.log("GetParam("+name+") = " + results[1])
+// 		return results[1];
+//   }
+// }
+
+
+// THIS IS THE NEW Query string getter
+function getURLParameter(name) {
+  return decodeURI(
+    (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+  );
 }
 
 function SCORM_INIT() {
@@ -222,17 +230,17 @@ function SCORM_INIT() {
 
   //  var lessonLocation = lmsAPI.LMSGetValue("cmi.core.lesson_location");
 
-      lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_status",GetParam('Lesson_Status'));
+      lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_status",getURLParameter('Lesson_Status'));
       if (lmsResult == "false")
-        alertScormError("LMSSetValue(\"cmi.core.lesson_status\",\"" + GetParam('Lesson_Status') + "\")");
+        alertScormError("LMSSetValue(\"cmi.core.lesson_status\",\"" + getURLParameter('Lesson_Status') + "\")");
 
-  //    lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_location",GetParam('Lesson_Location"));
+  //    lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_location",getURLParameter('Lesson_Location"));
   //    if (lmsResult == "false")
-  //      alertScormError("LMSSetValue(\"cmi.core.lesson_location\",\"" + GetParam('Lesson_Location') + "\")");
+  //      alertScormError("LMSSetValue(\"cmi.core.lesson_location\",\"" + getURLParameter('Lesson_Location') + "\")");
 
-      lmsResult = lmsAPI.LMSSetValue("cmi.core.score.raw",GetParam('Score'));
+      lmsResult = lmsAPI.LMSSetValue("cmi.core.score.raw",getURLParameter('Score'));
       if (lmsResult == "false")
-        alertScormError("LMSSetValue(\"cmi.core.score.raw\",\"" + GetParam('Score') + "\")");
+        alertScormError("LMSSetValue(\"cmi.core.score.raw\",\"" + getURLParameter('Score') + "\")");
 
     lessonStatus = lmsAPI.LMSGetValue("cmi.core.lesson_status");
     score = lmsAPI.LMSGetValue("cmi.core.score.raw");
