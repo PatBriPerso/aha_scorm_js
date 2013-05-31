@@ -274,8 +274,6 @@ function SCORM_INIT() {
 }
 
 $(document).ready(function(){
-  $("body").html("<h1>loading...</h1>");
-
   var css = " \
   iframe { border: none; width: 100%; height: 100%; overflow: scroll;} \
   body {margin: 0; padding: 0; } \
@@ -285,31 +283,6 @@ $(document).ready(function(){
   // $("head").append('<link rel="stylesheet" href="//raw.https://raw.github.com/phoenix-scitent/aha_scorm_js/master/scorm.css">')
   $("head").append('<style type="text/css">' + css + '</style>');
 
-  // SCORM_INIT();
-
   $("body").html('<iframe src="//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=6F5RMU26D&lastname=Ruoto&firstname=Joe"></iframe>');
 
 });
-
-
-
-///// OLD INSTRUCTIONS FOR POPUP WINDOW
-/////
-// function bodyInstructionText() {
-//   var instructions="<h2>Welcome!</h2> \
-//   Your course will automatically launch in a separate window. \
-//   <br /><br /> \
-//   <font style='color:red; font-weight:bold;'>Please do not close this window until you have finished using the course.</font>";
-
-//   if (action == "exit")
-//   {
-//     instructions="<h2>Thank you!</h2> \
-//     Thank you for using our course. We hope it was a rich learning experience for you.<br /> \
-//     Your score was: " + score + " (" + lessonStatus + ")";
-//     if (courseInNewWindow) instructions+="<br /><font style='color:green; font-weight:bold;'>You may now safely close this window.</font>";
-//   }
-
-//   $("body").html(instructions);
-
-// }
-
