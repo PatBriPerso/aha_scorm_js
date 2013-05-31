@@ -53,7 +53,7 @@ function checkCourseWindow()
 // remove leading and trailing white space
 function trim(string)
 {
-  if (string == ""){
+  if (string == "" || string == undefined){
     return " "
   } 
   return string.replace(/^\s+/, "").replace(/\s+$/, "");
