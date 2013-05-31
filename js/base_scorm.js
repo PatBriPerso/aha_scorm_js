@@ -17,8 +17,6 @@ if ( ! window.console ) {
 
 /////////////// SETUP VARIABLES
 
-// change courseInNewWindow to false if the LMS plays the course without popping a new window.
-var courseInNewWindow=true;
 
 var findAPITries = 0;
 var courseWindow =null;
@@ -155,8 +153,10 @@ function GetParam( name ) {
 	var results = regex.exec( window.location.href );
 
 	if( results == null )
+    console.log("GetParam("+name+") = --nada--")
 		return "";
 	else
+    console.log("GetParam("+name+") = " + results[1])
 		return results[1];
 }
 
@@ -286,3 +286,19 @@ $(document).ready(function(){
   SCORM_INIT();
   $("body").html('<iframe src="//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=6F5RMU26D&lastname=Ruoto&firstname=Joe"></iframe>');
 });
+
+
+
+// <fuseaction name="getScore">
+//      <do action="mPortal.getScoreForLMS" /> <!-- will check attributes there -->
+//      <if condition="isDefined('attributes.score')">
+//       <true>
+//        <relocate url="#attributes.returnURL#?action=exit&amp;Lesson_Status=#attributes.lessonStatus#&amp;Score=#attributes.score#" />
+//       </true>
+//      </if>
+//      <if condition="isDefined('attributes.errorCode')">
+//       <true>
+//        <relocate url="#attributes.returnURL#?action=error&amp;code=#attributes.errorcode#&amp;stuid=#attributes.extId#" />
+//       </true>
+//      </if> 
+//  </fuseaction>
