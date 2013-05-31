@@ -3,7 +3,7 @@ require "bundler"
 Bundler.require(:default)
 
 map "/" do
-  use Rack::Static, urls: ["/public"], root: Dir.pwd
+  use Rack::Static, urls: ["/js"], root: Dir.pwd
 
   run lambda { |env|
     headers = {
