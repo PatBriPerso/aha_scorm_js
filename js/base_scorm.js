@@ -152,12 +152,13 @@ function GetParam( name ) {
 	var regex = new RegExp( regexS );
 	var results = regex.exec( window.location.href );
 
-	if( results == null )
+	if( results == null ){
     console.log("GetParam("+name+") = --nada--")
 		return "";
-	else
+	} else {
     console.log("GetParam("+name+") = " + results[1])
 		return results[1];
+  }
 }
 
 function SCORM_INIT() {
@@ -287,7 +288,7 @@ $(document).ready(function(){
   $("body").html('<iframe src="//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=6F5RMU26D&lastname=Ruoto&firstname=Joe"></iframe>');
 });
 
-
+  
 
 // <fuseaction name="getScore">
 //      <do action="mPortal.getScoreForLMS" /> <!-- will check attributes there -->
