@@ -164,9 +164,7 @@ function getPassedParm(parm,lowerCase)
 
 // THIS IS THE NEW Query string getter
 function getURLParameter(name) {
-  return decodeURI(
-    (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
-  );
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
 
 function SCORM_INIT() {
