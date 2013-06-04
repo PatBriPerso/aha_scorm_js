@@ -22,7 +22,6 @@ var findAPITries = 0;
 var timerId = null;
 var userId = null;
 var reportTimer = null;
-var scorm_initialized = false;
 
 
 // Reconfigure the following items to customize to the client.
@@ -193,21 +192,15 @@ function SCORM_INIT() {
         "&lastname=" + escape(trim(nameArray[0])) +
         "&firstname=" + escape(trim(nameArray[1]));
 
-  // wait loop to check for when courseWindow closes
-    // when this happens get scores from Scorm Server Url
-
     console.log("I am inside the Course Init, setting mah interval, and your iframe with regStuUrl")
     // timerId = setInterval(getScores, 10000);
     $("body").html('<iframe src="' + regStuUrl + '"></iframe>');
     $("body").append('<div id="scoreCheckFrame"></div>');
-    // setTimeout('courseWindow=window.open(regStuUrl,"", "status,resizable,scrollbars")', 5000);
     }
   }  
 }
 
 $(document).ready(function(){
-  alert("document ready again")
-  console.log($(document))
   var css = " \
   iframe { border: none; width: 100%; height: 100%; overflow: scroll;} \
   body {margin: 0; padding: 0; } \
@@ -217,10 +210,9 @@ $(document).ready(function(){
   // $("head").append('<link rel="stylesheet" href="//raw.https://raw.github.com/phoenix-scitent/aha_scorm_js/master/scorm.css">')
   $("head").append('<style type="text/css">' + css + '</style>');
 
-  console.log("calling SCORM INIT once, i hope")
-  if (scorm_initialized == false) {
+  if (window.scorm_initialized == false || window.scorm_initialized == undefined) {
     SCORM_INIT();
-    scorm_initialized = true;    
+    window.scorm_initialized = true;    
   }
   // $("body").html('<iframe src="//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=6F5RMU26D&lastname=Ruoto&firstname=Joe"></iframe>');
   // console.log("I made a hard iframe and a div#scoreCheckFrame") 
