@@ -3,11 +3,17 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="pragma" content="no-cache">
 <script type="text/javascript">
+
+  var protocol = "http://"
+  var scormSrv = "found.pagekite.me"
+  var assetFolder = "/assets/scorm"
 	var orgId = '1';
 	var courseId = '4';
 	var orgKey = '27DB04D8B45E05D4';
+
+
+  document.getElementsByTagName('head')[0].appendChild(document.createElement('script')).src='//' + scormSrv + assetFolder + '/lib.js';
 </script>
-<script src="//ahajs.herokuapp.com/js/lib.js"></script>
 </head>
 <BODY>
 <center style="margin-top: 140px;"><img src="325.gif" /></center>
