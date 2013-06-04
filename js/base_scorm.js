@@ -32,7 +32,7 @@ var ReturnUrl = window.location.href.substring(0,window.location.href.indexOf("s
 
 function setupScoreFrame(){
   $("body").append('<div id="scoreCheckFrame"></div>');
-  timerId = setInterval(getScores, 10000);
+  timerId = setInterval(getScores, 15000);
 }
 
 function getScores()
