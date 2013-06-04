@@ -18,6 +18,26 @@
  */
 
 // everything is wrapped in the XD function to reduce namespace collisions
+/* 
+ * a backwards compatable implementation of postMessage
+ * by Josh Fraser (joshfraser.com)
+ * released under the Apache 2.0 license.  
+ *
+ * this code was adapted from Ben Alman's jQuery postMessage code found at:
+ * http://benalman.com/projects/jquery-postmessage-plugin/
+ * 
+ * other inspiration was taken from Luke Shepard's code for Facebook Connect:
+ * http://github.com/facebook/connect-js/blob/master/src/core/xd.js
+ *
+ * the goal of this project was to make a backwards compatable version of postMessage
+ * without having any dependency on jQuery or the FB Connect libraries
+ *
+ * my goal was to keep this as terse as possible since my own purpose was to use this 
+ * as part of a distributed widget where filesize could be sensative.
+ * 
+ */
+
+// everything is wrapped in the XD function to reduce namespace collisions
 var XD = function(){
   
     var interval_id,
