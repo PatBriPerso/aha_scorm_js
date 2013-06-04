@@ -43,6 +43,10 @@ function getScores()
     // reportTimer = setTimeout(reportTheScore, 2000);
 }
 
+XD.receiveMessage(function(message){
+  window.alert(message.data + " received on "+window.location.host);
+}, '//found.pagekite.me');
+
 function reportTheScore(scoreFrameUrl)
 {
   console.log("The URL of the SCORE IFRAME: ")
