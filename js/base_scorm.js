@@ -30,7 +30,7 @@ var ReturnUrl = window.location.href.substring(0,window.location.href.indexOf("s
 
 function getScores()
 {
-		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgID="+orgId+"&courseID="+courseId+"&extID="+userId+"&returnUrl="+ReturnUrl;
+		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgID="+orgId+"&orgKey="+orgKey+"&courseID="+courseId+"&extID="+userId+"&returnUrl="+ReturnUrl;
     console.log("getScores(); url = "+getScoresUrl)
 		// window.location.replace(getScoresUrl);
     $("#scoreCheckFrame").html('<iframe src="' + getScoresUrl + '"></iframe>');
