@@ -34,7 +34,7 @@ function getScores()
 		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgID="+orgId+"&orgKey="+orgKey+"&courseID="+courseId+"&extID="+userId+"&returnUrl="+ReturnUrl;
     console.log("getScores(); url = "+getScoresUrl)
 		// window.location.replace(getScoresUrl);
-    $("#scoreCheckFrame").html('<iframe style="height: 1px; display:none;" src="' + getScoresUrl + '"></iframe>');
+    $("#scoreCheckFrame").html('<iframe name="scoreFrame" style="height: 1px; display:none;" src="' + getScoresUrl + '"></iframe>');
     reportTimer = setTimeout(reportTheScore, 2000);
 }
 
@@ -44,25 +44,24 @@ function reportTheScore()
   var scoreFrameUrl = $("#scoreCheckFrame iframe").attr('src')
   console.log(scoreFrameUrl)
 
-  var lessonStatus = getURLParameter("Lesson_Status",scoreFrameUrl);
-  var score = getURLParameter("Score",scoreFrameUrl);
+  var scoreFrame = document.frames['scoreFrame']
 
-//  var lessonLocation = lmsAPI.LMSGetValue("cmi.core.lesson_location");
-  lmsResult = lmsAPI.LMSInitialize("");
-  lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_status",lessonStatus);
-  if (lmsResult == "false")
-    alertScormError("LMSSetValue(\"cmi.core.lesson_status\",\"" + lessonStatus + "\")");
+  var lessonStatus = pluckURLParameter("Lesson_Status",scoreFrame);
+  var score = pluckURLParameter("Score",scoreFrame);
+  console.log("lessonStatus: "+lessonStatus)
+  console.log("score: "+score)
 
-//    lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_location",getURLParameter('Lesson_Location"));
-//    if (lmsResult == "false")
-//      alertScormError("LMSSetValue(\"cmi.core.lesson_location\",\"" + getURLParameter('Lesson_Location') + "\")");
+  // lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_status",lessonStatus);
+  // if (lmsResult == "false")
+  //   alertScormError("LMSSetValue(\"cmi.core.lesson_status\",\"" + lessonStatus + "\")");
 
-  lmsResult = lmsAPI.LMSSetValue("cmi.core.score.raw",score);
-  if (lmsResult == "false")
-    alertScormError("LMSSetValue(\"cmi.core.score.raw\",\"" + score + "\")");
 
-  lessonStatus = lmsAPI.LMSGetValue("cmi.core.lesson_status");
-  score = lmsAPI.LMSGetValue("cmi.core.score.raw");
+  // lmsResult = lmsAPI.LMSSetValue("cmi.core.score.raw",score);
+  // if (lmsResult == "false")
+  //   alertScormError("LMSSetValue(\"cmi.core.score.raw\",\"" + score + "\")");
+
+  // lessonStatus = lmsAPI.LMSGetValue("cmi.core.lesson_status");
+  // score = lmsAPI.LMSGetValue("cmi.core.score.raw");
 
 }
 
@@ -148,13 +147,12 @@ function alertScormError(context, ignoreUnsupported)
 }
 
 
-
+function pluckURLParameter(name, doc) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(doc.location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+}
 // THIS IS THE NEW Query string getter
-function getURLParameter(name, url) {
-    if (url == undefined){
-      url = location.search      
-    }
-    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(url)||[,""])[1].replace(/\+/g, '%20'))||null;
+function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
 
 function SCORM_INIT() {
