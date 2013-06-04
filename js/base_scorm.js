@@ -21,6 +21,7 @@ if ( ! window.console ) {
 var findAPITries = 0;
 var timerId = null;
 var userId = null;
+var reportTimer = null;
 
 // Reconfigure the following items to customize to the client.
 var scormSrv = "found.pagekite.me"
@@ -34,20 +35,14 @@ function getScores()
     console.log("getScores(); url = "+getScoresUrl)
 		// window.location.replace(getScoresUrl);
     $("#scoreCheckFrame").html('<iframe style="height: 1px; display:none;" src="' + getScoresUrl + '"></iframe>');
-    console.log($('#scoreCheckFrame iframe').attr("src"))
+    reportTimer = setTimeout(reportTheScore, 2000);
 }
 
-function checkCourseWindow()
+function reportTheScore()
 {
-  console.log("Oops, inside checkCourseWindow")
-	if (courseWindow && courseWindow.closed)
-	{
-  console.log("Oops OoOPS!, inside checkCourseWindow")
-		clearInterval(timerId);
-		// call Scorm Server URL and get scores
-		setTimeout("getScores()", 1000);
-	}
+
 }
+
 
 // remove leading and trailing white space
 function trim(string)
@@ -216,7 +211,7 @@ function SCORM_INIT() {
       // when this happens get scores from Scorm Server Url
 
       console.log("I am inside the Course Init, setting mah interval, and your iframe with regStuUrl")
-      timerId = setInterval(getScores, 5000);
+      timerId = setInterval(getScores, 10000);
       $("body").html('<iframe src="' + regStuUrl + '"></iframe>');
       $("body").append('<div id="scoreCheckFrame"></div>');
       // setTimeout('courseWindow=window.open(regStuUrl,"", "status,resizable,scrollbars")', 5000);
