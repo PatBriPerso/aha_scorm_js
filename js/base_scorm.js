@@ -40,7 +40,8 @@ function getScores()
 
 function reportTheScore()
 {
-
+  console.log("The URL of the SCORE IFRAME: ")
+  console.log($("#scoreCheckFrame iframe").attr('src'))
 }
 
 
