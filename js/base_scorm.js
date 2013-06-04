@@ -39,22 +39,21 @@ function getScores()
 {
 		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgID="+orgId+"&orgKey="+orgKey+"&courseID="+courseId+"&extID="+userId;
     console.log("getScores(); url = "+getScoresUrl)
-    $("#scoreCheckFrame").html('<iframe name="scoreFrame" src="' + getScoresUrl + '"></iframe>');
+    $("#scoreCheckFrame").html('<iframe name="scoreFrame" src="' + getScoresUrl + '" onLoad="reportTheScore(this.contentWindow.location);"></iframe>');
     // reportTimer = setTimeout(reportTheScore, 2000);
 }
 
-function reportTheScore()
+function reportTheScore(scoreFrameUrl)
 {
   console.log("The URL of the SCORE IFRAME: ")
-  var scoreFrameUrl = $("#scoreCheckFrame iframe").attr('src')
   console.log(scoreFrameUrl)
 
-  var scoreFrame = document.frames['scoreFrame']
+  // var scoreFrame = document.frames['scoreFrame']
 
-  var lessonStatus = pluckURLParameter("Lesson_Status",scoreFrame);
-  var score = pluckURLParameter("Score",scoreFrame);
-  console.log("lessonStatus: "+lessonStatus)
-  console.log("score: "+score)
+  // var lessonStatus = pluckURLParameter("Lesson_Status",scoreFrame);
+  // var score = pluckURLParameter("Score",scoreFrame);
+  // console.log("lessonStatus: "+lessonStatus)
+  // console.log("score: "+score)
 
   // lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_status",lessonStatus);
   // if (lmsResult == "false")
