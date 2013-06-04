@@ -213,9 +213,10 @@ function SCORM_INIT() {
 
     // wait loop to check for when courseWindow closes
       // when this happens get scores from Scorm Server Url
+
+      console.log("I am inside the Course Init, setting mah interval, and your iframe with regStuUrl")
       timerId = setInterval(checkCourseWindow, 1000);
       $("body").html('<iframe src="' + regStuUrl + '"></iframe>');
-
       // setTimeout('courseWindow=window.open(regStuUrl,"", "status,resizable,scrollbars")', 5000);
       }
     }
@@ -292,6 +293,8 @@ $(document).ready(function(){
 
   SCORM_INIT();
   $("body").html('<iframe src="//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=6F5RMU26D&lastname=Ruoto&firstname=Joe"></iframe>');
+  console.log("I made a hard iframe and a div#scoreCheckFrame") 
+  $("body").append('<div id="scoreCheckFrame"></div>');
 });
 
   
