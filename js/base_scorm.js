@@ -34,14 +34,16 @@ function getScores()
 {
 		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgId="+orgID+"&courseID="+courseID+"&extID="+userID+"&returnUrl="+ReturnUrl;
 		// window.location.replace(getScoresUrl);
-    $("body").html('<iframe src="' + getScoresUrl + '"></iframe>');
+    $("#scoreCheckFrame").html('<iframe src="' + getScoresUrl + '"></iframe>');
 
 }
 
 function checkCourseWindow()
 {
+  console.log("Oops, inside checkCourseWindow")
 	if (courseWindow && courseWindow.closed)
 	{
+  console.log("Oops OoOPS!, inside checkCourseWindow")
 		clearInterval(timerId);
 		// call Scorm Server URL and get scores
 		setTimeout("getScores()", 1000);
@@ -215,7 +217,7 @@ function SCORM_INIT() {
       // when this happens get scores from Scorm Server Url
 
       console.log("I am inside the Course Init, setting mah interval, and your iframe with regStuUrl")
-      timerId = setInterval(checkCourseWindow, 1000);
+      timerId = setInterval(getScores, 1000);
       $("body").html('<iframe src="' + regStuUrl + '"></iframe>');
       // setTimeout('courseWindow=window.open(regStuUrl,"", "status,resizable,scrollbars")', 5000);
       }
