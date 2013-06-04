@@ -48,7 +48,7 @@ function reportTheScore()
   var score = getURLParameter("Score",scoreFrameUrl);
 
 //  var lessonLocation = lmsAPI.LMSGetValue("cmi.core.lesson_location");
-
+  lmsResult = lmsAPI.LMSInitialize("");
   lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_status",lessonStatus);
   if (lmsResult == "false")
     alertScormError("LMSSetValue(\"cmi.core.lesson_status\",\"" + lessonStatus + "\")");
@@ -150,9 +150,10 @@ function alertScormError(context, ignoreUnsupported)
 
 
 // THIS IS THE NEW Query string getter
-function getURLParameter(name,url) {
-    if url == undefined 
-      url = location.search
+function getURLParameter(name, url) {
+    if (url == undefined){
+      url = location.search      
+    }
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(url)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
 
