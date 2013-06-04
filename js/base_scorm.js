@@ -60,7 +60,9 @@ function reportTheScore(scores)
   console.log("lessonStatus: "+lessonStatus)
   console.log("score: "+score)
 
+
   lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_status",lessonStatus);
+  lmsAPI.LMSCommit();
   if (lmsResult == "false")
     alertScormError("LMSSetValue(\"cmi.core.lesson_status\",\"" + lessonStatus + "\")");
 
@@ -69,19 +71,20 @@ function reportTheScore(scores)
   if (lmsResult == "false")
     alertScormError("LMSSetValue(\"cmi.core.score.raw\",\"" + score + "\")");
 
-  // lmsResult = lmsAPI.LMSCommit();
-  // if (lmsResult == "false")
-  //   alertScormError("LMSCommit()");
+  lmsResult = lmsAPI.LMSCommit("");
+  console.log(lmsResult + " for LMSCommit")
+  if (lmsResult == "false")
+    alertScormError("LMSCommit()");
 
   lessonStatus = lmsAPI.LMSGetValue("cmi.core.lesson_status");
   score = lmsAPI.LMSGetValue("cmi.core.score.raw");
   console.log("LMS:lessonStatus: "+lessonStatus)
   console.log("LMS:score: "+score)
 
-  lmsResult = lmsAPI.LMSFinish("");
-    if (lmsResult == "false")
-    // Couldn't finish via the LMS.
-    alertScormError("LMSFinish()");
+  // lmsResult = lmsAPI.LMSFinish("");
+  //   if (lmsResult == "false")
+  //   // Couldn't finish via the LMS.
+  //   alertScormError("LMSFinish()");
 
 
 }
