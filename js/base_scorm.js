@@ -44,13 +44,15 @@ function getScores()
 }
 
 XD.receiveMessage(function(message){
-  window.alert(message.data + " received on "+window.location.host);
-}, '//found.pagekite.me');
+  reportTheScore(message.data);
+}, scormSrv);
 
-function reportTheScore(scoreFrameUrl)
+function reportTheScore(scores)
 {
-  console.log("The URL of the SCORE IFRAME: ")
-  console.log(scoreFrameUrl)
+  console.log("Score: ")
+  console.log(scores.split("|")[0])
+  console.log("Status: ")
+  console.log(scores.split("|")[1])
 
   // var scoreFrame = document.frames['scoreFrame']
 
