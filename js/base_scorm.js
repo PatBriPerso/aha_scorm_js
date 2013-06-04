@@ -212,6 +212,7 @@ function SCORM_INIT() {
     }
     else if (action == "exit")
     {
+      alert("How are we getting here?")
       lmsResult = lmsAPI.LMSInitialize("");
       // The SCO is exiting.
   //    var lessonLocation = getURLParameter("Lesson_Location");
