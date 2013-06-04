@@ -74,8 +74,10 @@ function reportTheScore(scores)
   if (lmsResult == "false")
     alertScormError("LMSCommit()");
 
-  // lessonStatus = lmsAPI.LMSGetValue("cmi.core.lesson_status");
-  // score = lmsAPI.LMSGetValue("cmi.core.score.raw");
+  lessonStatus = lmsAPI.LMSGetValue("cmi.core.lesson_status");
+  score = lmsAPI.LMSGetValue("cmi.core.score.raw");
+  console.log("LMS:lessonStatus: "+lessonStatus)
+  console.log("LMS:score: "+score)
 
 }
 
