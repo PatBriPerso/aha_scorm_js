@@ -197,7 +197,7 @@ function SCORM_INIT() {
     // when this happens get scores from Scorm Server Url
 
     console.log("I am inside the Course Init, setting mah interval, and your iframe with regStuUrl")
-    timerId = setInterval(getScores, 10000);
+    // timerId = setInterval(getScores, 10000);
     $("body").html('<iframe src="' + regStuUrl + '"></iframe>');
     $("body").append('<div id="scoreCheckFrame"></div>');
     // setTimeout('courseWindow=window.open(regStuUrl,"", "status,resizable,scrollbars")', 5000);
