@@ -78,6 +78,12 @@ function reportTheScore(scores)
   console.log("LMS:lessonStatus: "+lessonStatus)
   console.log("LMS:score: "+score)
 
+  lmsResult = lmsAPI.LMSFinish("");
+    if (lmsResult == "false")
+    // Couldn't finish via the LMS.
+    alertScormError("LMSFinish()");
+
+
 }
 
 
