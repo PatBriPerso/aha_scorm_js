@@ -35,8 +35,7 @@ function getScores()
 {
 		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgID="+orgId+"&orgKey="+orgKey+"&courseID="+courseId+"&extID="+userId+"&returnUrl="+ReturnUrl;
     console.log("getScores(); url = "+getScoresUrl)
-		// window.location.replace(getScoresUrl);
-    $("#scoreCheckFrame").html('<iframe name="scoreFrame" style="height: 1px; display:none;" src="' + getScoresUrl + '"></iframe>');
+    $("#scoreCheckFrame").html('<iframe name="scoreFrame" src="' + getScoresUrl + '"></iframe>');
     reportTimer = setTimeout(reportTheScore, 2000);
 }
 
