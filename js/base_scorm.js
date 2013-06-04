@@ -33,7 +33,7 @@ function getScores()
 		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgID="+orgId+"&orgKey="+orgKey+"&courseID="+courseId+"&extID="+userId+"&returnUrl="+ReturnUrl;
     console.log("getScores(); url = "+getScoresUrl)
 		// window.location.replace(getScoresUrl);
-    $("#scoreCheckFrame").html('<iframe src="' + getScoresUrl + '"></iframe>');
+    $("#scoreCheckFrame").html('<iframe style="height: 1px; display:none;" src="' + getScoresUrl + '"></iframe>');
     console.log($('#scoreCheckFrame iframe').attr("src"))
 }
 
