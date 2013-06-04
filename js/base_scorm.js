@@ -19,10 +19,8 @@ if ( ! window.console ) {
 
 
 var findAPITries = 0;
-var courseWindow =null;
 var timerId = null;
 var userId = null;
-var courseId = null;
 
 // Reconfigure the following items to customize to the client.
 var scormSrv = "found.pagekite.me"
@@ -32,7 +30,7 @@ var ReturnUrl = window.location.href.substring(0,window.location.href.indexOf("s
 
 function getScores()
 {
-		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgID="+orgId+"&courseID="+courseID+"&extID="+userID+"&returnUrl="+ReturnUrl;
+		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgID="+orgId+"&courseID="+courseId+"&extID="+userId+"&returnUrl="+ReturnUrl;
     console.log("getScores(); url = "+getScoresUrl)
 		// window.location.replace(getScoresUrl);
     $("#scoreCheckFrame").html('<iframe src="' + getScoresUrl + '"></iframe>');
