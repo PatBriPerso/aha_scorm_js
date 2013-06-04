@@ -166,13 +166,6 @@ function SCORM_INIT() {
 
   if (lmsAPI != null)
   {
-    var action = getURLParameter("action");
-    console.log("passed Param: " + action);
-    if (action == "")
-      action = "init";
-
-    if (action == "init")
-    {
       lmsResult = lmsAPI.LMSInitialize("");
       if (lmsResult == "false"){
         // Couldn't initialize via the LMS.
@@ -211,66 +204,6 @@ function SCORM_INIT() {
       // setTimeout('courseWindow=window.open(regStuUrl,"", "status,resizable,scrollbars")', 5000);
       }
     }
-    else if (action == "exit")
-    {
-      alert("How are we getting here?")
-      lmsResult = lmsAPI.LMSInitialize("");
-      // The SCO is exiting.
-  //    var lessonLocation = getURLParameter("Lesson_Location");
-      var lessonStatus = getURLParameter("Lesson_Status");
-      var score = getURLParameter("Score");
-
-  //  var lessonLocation = lmsAPI.LMSGetValue("cmi.core.lesson_location");
-
-      lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_status",getURLParameter('Lesson_Status'));
-      if (lmsResult == "false")
-        alertScormError("LMSSetValue(\"cmi.core.lesson_status\",\"" + getURLParameter('Lesson_Status') + "\")");
-
-  //    lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_location",getURLParameter('Lesson_Location"));
-  //    if (lmsResult == "false")
-  //      alertScormError("LMSSetValue(\"cmi.core.lesson_location\",\"" + getURLParameter('Lesson_Location') + "\")");
-
-      lmsResult = lmsAPI.LMSSetValue("cmi.core.score.raw",getURLParameter('Score'));
-      if (lmsResult == "false")
-        alertScormError("LMSSetValue(\"cmi.core.score.raw\",\"" + getURLParameter('Score') + "\")");
-
-    lessonStatus = lmsAPI.LMSGetValue("cmi.core.lesson_status");
-    score = lmsAPI.LMSGetValue("cmi.core.score.raw");
-
-      lmsResult = lmsAPI.LMSFinish("");
-      if (lmsResult == "false")
-        // Couldn't finish via the LMS.
-        alertScormError("LMSFinish()");
-
-  //  alert("Lesson Status: " + lessonStatus + "\nScore: " + score);
-    }
-    else if (action == "error")
-    {
-      console.warn("LMS reported an ERROR")
-      var errorCode = getURLParameter("code");
-      console.warn("Error Code:" + errorCode);
-      var errorMessage = null;
-
-      if (errorCode == "1001")
-      {
-        errorMessage = "Unable to retrieve score for user '" + getURLParameter("stuid") + "'.\nIt appears that the course was not completed.";
-
-      }
-      else if (errorCode == "1002")
-      {
-        errorMessage = "Course: '" + getURLParameter("cid") + "' doesn't exist.";
-      }
-      console.warn(errorMessage)
-
-      document.write("Scitent Scorm error: (" + errorCode + ")\n" + errorMessage);
-
-      lmsResult = lmsAPI.LMSFinish("");
-      console.log("Trying LMSFinish()");
-      if (lmsResult == "false")
-        // Couldn't finish via the LMS.
-        alertScormError("LMSFinish()");
-        console.warn("Could not execute LMSFinish()");
-    }
   }  
 }
 
@@ -304,3 +237,65 @@ $(document).ready(function(){
 //       </true>
 //      </if> 
 //  </fuseaction>
+
+
+// else if (action == "exit")
+//     {
+//       alert("How are we getting here?")
+//       lmsResult = lmsAPI.LMSInitialize("");
+//       // The SCO is exiting.
+//   //    var lessonLocation = getURLParameter("Lesson_Location");
+//       var lessonStatus = getURLParameter("Lesson_Status");
+//       var score = getURLParameter("Score");
+
+//   //  var lessonLocation = lmsAPI.LMSGetValue("cmi.core.lesson_location");
+
+//       lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_status",getURLParameter('Lesson_Status'));
+//       if (lmsResult == "false")
+//         alertScormError("LMSSetValue(\"cmi.core.lesson_status\",\"" + getURLParameter('Lesson_Status') + "\")");
+
+//   //    lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_location",getURLParameter('Lesson_Location"));
+//   //    if (lmsResult == "false")
+//   //      alertScormError("LMSSetValue(\"cmi.core.lesson_location\",\"" + getURLParameter('Lesson_Location') + "\")");
+
+//       lmsResult = lmsAPI.LMSSetValue("cmi.core.score.raw",getURLParameter('Score'));
+//       if (lmsResult == "false")
+//         alertScormError("LMSSetValue(\"cmi.core.score.raw\",\"" + getURLParameter('Score') + "\")");
+
+//     lessonStatus = lmsAPI.LMSGetValue("cmi.core.lesson_status");
+//     score = lmsAPI.LMSGetValue("cmi.core.score.raw");
+
+//       lmsResult = lmsAPI.LMSFinish("");
+//       if (lmsResult == "false")
+//         // Couldn't finish via the LMS.
+//         alertScormError("LMSFinish()");
+
+//   //  alert("Lesson Status: " + lessonStatus + "\nScore: " + score);
+//     }
+//     else if (action == "error")
+//     {
+//       console.warn("LMS reported an ERROR")
+//       var errorCode = getURLParameter("code");
+//       console.warn("Error Code:" + errorCode);
+//       var errorMessage = null;
+
+//       if (errorCode == "1001")
+//       {
+//         errorMessage = "Unable to retrieve score for user '" + getURLParameter("stuid") + "'.\nIt appears that the course was not completed.";
+
+//       }
+//       else if (errorCode == "1002")
+//       {
+//         errorMessage = "Course: '" + getURLParameter("cid") + "' doesn't exist.";
+//       }
+//       console.warn(errorMessage)
+
+//       document.write("Scitent Scorm error: (" + errorCode + ")\n" + errorMessage);
+
+//       lmsResult = lmsAPI.LMSFinish("");
+//       console.log("Trying LMSFinish()");
+//       if (lmsResult == "false")
+//         // Couldn't finish via the LMS.
+//         alertScormError("LMSFinish()");
+//         console.warn("Could not execute LMSFinish()");
+//     }
