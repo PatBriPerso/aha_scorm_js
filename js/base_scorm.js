@@ -25,8 +25,9 @@ var reportTimer = null;
 
 
 // Reconfigure the following items to customize to the client.
+var protocol = "http://"
 var scormSrv = "found.pagekite.me"
-var scormSrvUrl = "http://" + scormSrv + "/external_sco";
+var scormSrvUrl = protocol + scormSrv + "/external_sco";
 var ReturnUrl = window.location.href.substring(0,window.location.href.indexOf("scormAdapter.htm")) + "scormAdapter.htm";
 
 
@@ -45,7 +46,7 @@ function getScores()
 
 XD.receiveMessage(function(message){
   reportTheScore(message.data);
-}, "http://"+scormSrv);
+}, protocol+scormSrv);
 
 function reportTheScore(scores)
 {
