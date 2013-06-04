@@ -30,6 +30,11 @@ var scormSrvUrl = "http://" + scormSrv + "/external_sco";
 var ReturnUrl = window.location.href.substring(0,window.location.href.indexOf("scormAdapter.htm")) + "scormAdapter.htm";
 
 
+function setupScoreFrame(){
+  $("body").append('<div id="scoreCheckFrame"></div>');
+  timerId = setInterval(getScores, 10000);
+}
+
 function getScores()
 {
 		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgID="+orgId+"&orgKey="+orgKey+"&courseID="+courseId+"&extID="+userId+"&returnUrl="+ReturnUrl;
@@ -193,9 +198,8 @@ function SCORM_INIT() {
         "&firstname=" + escape(trim(nameArray[1]));
 
     console.log("I am inside the Course Init, setting mah interval, and your iframe with regStuUrl")
-    // timerId = setInterval(getScores, 10000);
     $("body").html('<iframe src="' + regStuUrl + '"></iframe>');
-    $("body").append('<div id="scoreCheckFrame"></div>');
+    setupScoreFrame();
     }
   }  
 }
