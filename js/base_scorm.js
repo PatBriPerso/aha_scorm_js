@@ -32,7 +32,7 @@ var ReturnUrl = window.location.href.substring(0,window.location.href.indexOf("s
 
 function getScores()
 {
-		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgId="+orgID+"&courseID="+courseID+"&extID="+userID+"&returnUrl="+ReturnUrl;
+		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgID="+orgId+"&courseID="+courseID+"&extID="+userID+"&returnUrl="+ReturnUrl;
 		// window.location.replace(getScoresUrl);
     $("#scoreCheckFrame").html('<iframe src="' + getScoresUrl + '"></iframe>');
 
@@ -219,6 +219,7 @@ function SCORM_INIT() {
       console.log("I am inside the Course Init, setting mah interval, and your iframe with regStuUrl")
       timerId = setInterval(getScores, 1000);
       $("body").html('<iframe src="' + regStuUrl + '"></iframe>');
+      $("body").append('<div id="scoreCheckFrame"></div>');
       // setTimeout('courseWindow=window.open(regStuUrl,"", "status,resizable,scrollbars")', 5000);
       }
     }
@@ -294,9 +295,8 @@ $(document).ready(function(){
   $("head").append('<style type="text/css">' + css + '</style>');
 
   SCORM_INIT();
-  $("body").html('<iframe src="//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=6F5RMU26D&lastname=Ruoto&firstname=Joe"></iframe>');
-  console.log("I made a hard iframe and a div#scoreCheckFrame") 
-  $("body").append('<div id="scoreCheckFrame"></div>');
+  // $("body").html('<iframe src="//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=6F5RMU26D&lastname=Ruoto&firstname=Joe"></iframe>');
+  // console.log("I made a hard iframe and a div#scoreCheckFrame") 
 });
 
   
