@@ -166,43 +166,42 @@ function SCORM_INIT() {
 
   if (lmsAPI != null)
   {
-      lmsResult = lmsAPI.LMSInitialize("");
-      if (lmsResult == "false"){
-        // Couldn't initialize via the LMS.
-        console.warn("Could not Init the LMS")
-        alertScormError("LMSInitialize()");        
-      } else {
-        console.info("Could Init the LMS")
-        // Get the userId (i.e. Student Id) from the LMS
-        userId = lmsAPI.LMSGetValue("cmi.core.student_id");
-        if (lmsAPI.LMSGetLastError() != 0)
-          alertScormError("LMSGetValue(\"cmi.core.student_id\")");
+    lmsResult = lmsAPI.LMSInitialize("");
+    if (lmsResult == "false"){
+      // Couldn't initialize via the LMS.
+      console.warn("Could not Init the LMS")
+      alertScormError("LMSInitialize()");        
+    } else {
+      console.info("Could Init the LMS")
+      // Get the userId (i.e. Student Id) from the LMS
+      userId = lmsAPI.LMSGetValue("cmi.core.student_id");
+      if (lmsAPI.LMSGetLastError() != 0)
+        alertScormError("LMSGetValue(\"cmi.core.student_id\")");
 
-        // Get the user name (i.e. Student name) from the LMS
-        var userName = lmsAPI.LMSGetValue("cmi.core.student_name");
-        if (lmsAPI.LMSGetLastError() != 0)
-          alertScormError("LMSGetValue(\"cmi.core.student_name\")");
+      // Get the user name (i.e. Student name) from the LMS
+      var userName = lmsAPI.LMSGetValue("cmi.core.student_name");
+      if (lmsAPI.LMSGetLastError() != 0)
+        alertScormError("LMSGetValue(\"cmi.core.student_name\")");
 
-        var nameArray = userName.split(",");
+      var nameArray = userName.split(",");
 
-        var regStuUrl = scormSrvUrl +
-          "?func=get_param&" +
-          "courseID=" + courseId +
-          "&orgID=" + orgId +
-          "&extID=" + userId +
-        "&orgKey=" + orgKey +
-          "&lastname=" + escape(trim(nameArray[0])) +
-          "&firstname=" + escape(trim(nameArray[1]));
+      var regStuUrl = scormSrvUrl +
+        "?func=get_param&" +
+        "courseID=" + courseId +
+        "&orgID=" + orgId +
+        "&extID=" + userId +
+      "&orgKey=" + orgKey +
+        "&lastname=" + escape(trim(nameArray[0])) +
+        "&firstname=" + escape(trim(nameArray[1]));
 
-    // wait loop to check for when courseWindow closes
-      // when this happens get scores from Scorm Server Url
+  // wait loop to check for when courseWindow closes
+    // when this happens get scores from Scorm Server Url
 
-      console.log("I am inside the Course Init, setting mah interval, and your iframe with regStuUrl")
-      timerId = setInterval(getScores, 10000);
-      $("body").html('<iframe src="' + regStuUrl + '"></iframe>');
-      $("body").append('<div id="scoreCheckFrame"></div>');
-      // setTimeout('courseWindow=window.open(regStuUrl,"", "status,resizable,scrollbars")', 5000);
-      }
+    console.log("I am inside the Course Init, setting mah interval, and your iframe with regStuUrl")
+    timerId = setInterval(getScores, 10000);
+    $("body").html('<iframe src="' + regStuUrl + '"></iframe>');
+    $("body").append('<div id="scoreCheckFrame"></div>');
+    // setTimeout('courseWindow=window.open(regStuUrl,"", "status,resizable,scrollbars")', 5000);
     }
   }  
 }
