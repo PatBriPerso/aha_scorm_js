@@ -41,7 +41,29 @@ function getScores()
 function reportTheScore()
 {
   console.log("The URL of the SCORE IFRAME: ")
-  console.log($("#scoreCheckFrame iframe").attr('src'))
+  var scoreFrameUrl = $("#scoreCheckFrame iframe").attr('src')
+  console.log(scoreFrameUrl)
+
+  var lessonStatus = getURLParameter("Lesson_Status",scoreFrameUrl);
+  var score = getURLParameter("Score",scoreFrameUrl);
+
+//  var lessonLocation = lmsAPI.LMSGetValue("cmi.core.lesson_location");
+
+  lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_status",lessonStatus);
+  if (lmsResult == "false")
+    alertScormError("LMSSetValue(\"cmi.core.lesson_status\",\"" + lessonStatus + "\")");
+
+//    lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_location",getURLParameter('Lesson_Location"));
+//    if (lmsResult == "false")
+//      alertScormError("LMSSetValue(\"cmi.core.lesson_location\",\"" + getURLParameter('Lesson_Location') + "\")");
+
+  lmsResult = lmsAPI.LMSSetValue("cmi.core.score.raw",score);
+  if (lmsResult == "false")
+    alertScormError("LMSSetValue(\"cmi.core.score.raw\",\"" + score + "\")");
+
+  lessonStatus = lmsAPI.LMSGetValue("cmi.core.lesson_status");
+  score = lmsAPI.LMSGetValue("cmi.core.score.raw");
+
 }
 
 
@@ -125,43 +147,13 @@ function alertScormError(context, ignoreUnsupported)
   }
 }
 
-function getPassedParm(parm,lowerCase)
-{
-  if (location.search == "")
-    return "";
-
-  if (typeof(lowerCase) == "undefined")
-    // Maintains compatibility with code that called this without the parameter.
-    lowerCase = true;
-
-  var parmList = "&" + location.search.substring(1,location.search.length) + "&";
-  var re = new RegExp("&" + parm + "=([^&]*)&","i");
-  var foundArray = re.exec(parmList);
-  if (foundArray == null)
-    return "";
-
-  return lowerCase ? foundArray[1].toLowerCase() : foundArray[1];
-}
-
-// function GetParam( name ) {
-// 	name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
-// 	var regexS = "[\\?&]"+name+"=([^&#]*)";
-// 	var regex = new RegExp( regexS );
-// 	var results = regex.exec( window.location.href );
-
-// 	if( results == null ){
-//     console.log("GetParam("+name+") = --nada--")
-// 		return "";
-// 	} else {
-//     console.log("GetParam("+name+") = " + results[1])
-// 		return results[1];
-//   }
-// }
 
 
 // THIS IS THE NEW Query string getter
-function getURLParameter(name) {
-    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+function getURLParameter(name,url) {
+    if url == undefined 
+      url = location.search
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(url)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
 
 function SCORM_INIT() {
@@ -173,7 +165,7 @@ function SCORM_INIT() {
 
   if (lmsAPI != null)
   {
-    var action = getPassedParm("action");
+    var action = getURLParameter("action");
     console.log("passed Param: " + action);
     if (action == "")
       action = "init";
@@ -220,10 +212,11 @@ function SCORM_INIT() {
     }
     else if (action == "exit")
     {
+      lmsResult = lmsAPI.LMSInitialize("");
       // The SCO is exiting.
-  //    var lessonLocation = getPassedParm("Lesson_Location");
-      var lessonStatus = getPassedParm("Lesson_Status");
-      var score = getPassedParm("Score");
+  //    var lessonLocation = getURLParameter("Lesson_Location");
+      var lessonStatus = getURLParameter("Lesson_Status");
+      var score = getURLParameter("Score");
 
   //  var lessonLocation = lmsAPI.LMSGetValue("cmi.core.lesson_location");
 
@@ -252,18 +245,18 @@ function SCORM_INIT() {
     else if (action == "error")
     {
       console.warn("LMS reported an ERROR")
-      var errorCode = getPassedParm("code");
+      var errorCode = getURLParameter("code");
       console.warn("Error Code:" + errorCode);
       var errorMessage = null;
 
       if (errorCode == "1001")
       {
-        errorMessage = "Unable to retrieve score for user '" + getPassedParm("stuid") + "'.\nIt appears that the course was not completed.";
+        errorMessage = "Unable to retrieve score for user '" + getURLParameter("stuid") + "'.\nIt appears that the course was not completed.";
 
       }
       else if (errorCode == "1002")
       {
-        errorMessage = "Course: '" + getPassedParm("cid") + "' doesn't exist.";
+        errorMessage = "Course: '" + getURLParameter("cid") + "' doesn't exist.";
       }
       console.warn(errorMessage)
 
