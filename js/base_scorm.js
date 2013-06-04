@@ -33,7 +33,7 @@ var ReturnUrl = window.location.href.substring(0,window.location.href.indexOf("s
 
 function setupScoreFrame(){
   $("body").append('<div id="scoreCheckFrame"></div>');
-  timerId = setInterval(getScores, 15000);
+  timerId = setInterval(getScores, 7000);
 }
 
 function getScores()
@@ -41,7 +41,6 @@ function getScores()
 		var getScoresUrl = scormSrvUrl + "?func=get_scores&orgID="+orgId+"&orgKey="+orgKey+"&courseID="+courseId+"&extID="+userId + '#' + encodeURIComponent(document.location.href);
     console.log("getScores(); url = "+getScoresUrl)
     $("#scoreCheckFrame").html('<iframe name="scoreFrame" src="' + getScoresUrl + '"></iframe>');
-    // reportTimer = setTimeout(reportTheScore, 2000);
 }
 
 XD.receiveMessage(function(message){
@@ -70,9 +69,9 @@ function reportTheScore(scores)
   if (lmsResult == "false")
     alertScormError("LMSSetValue(\"cmi.core.score.raw\",\"" + score + "\")");
 
-  lmsResult = lmsAPI.LMSCommit();
-  if (lmsResult == "false")
-    alertScormError("LMSCommit()");
+  // lmsResult = lmsAPI.LMSCommit();
+  // if (lmsResult == "false")
+  //   alertScormError("LMSCommit()");
 
   lessonStatus = lmsAPI.LMSGetValue("cmi.core.lesson_status");
   score = lmsAPI.LMSGetValue("cmi.core.score.raw");
