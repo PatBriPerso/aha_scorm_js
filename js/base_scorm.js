@@ -45,7 +45,7 @@ function getScores()
 
 XD.receiveMessage(function(message){
   reportTheScore(message.data);
-}, scormSrv);
+}, "http://"+scormSrv);
 
 function reportTheScore(scores)
 {
