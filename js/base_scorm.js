@@ -173,7 +173,7 @@ function SCORM_INIT() {
     if (lmsResult == "false"){
       // Couldn't initialize via the LMS.
       console.warn("Could not Init the LMS")
-      alertScormError("LMSInitialize()");        
+      // alertScormError("LMSInitialize()");        
     } else {
       console.info("Could Init the LMS")
       // Get the userId (i.e. Student Id) from the LMS
