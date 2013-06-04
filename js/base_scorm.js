@@ -55,21 +55,20 @@ function reportTheScore(scores)
   console.log("Status: ")
   console.log(scores.split("|")[1])
 
-  // var scoreFrame = document.frames['scoreFrame']
 
-  // var lessonStatus = pluckURLParameter("Lesson_Status",scoreFrame);
-  // var score = pluckURLParameter("Score",scoreFrame);
-  // console.log("lessonStatus: "+lessonStatus)
-  // console.log("score: "+score)
+  var lessonStatus = scores.split("|")[1];
+  var score = scores.split("|")[0];
+  console.log("lessonStatus: "+lessonStatus)
+  console.log("score: "+score)
 
-  // lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_status",lessonStatus);
-  // if (lmsResult == "false")
-  //   alertScormError("LMSSetValue(\"cmi.core.lesson_status\",\"" + lessonStatus + "\")");
+  lmsResult = lmsAPI.LMSSetValue("cmi.core.lesson_status",lessonStatus);
+  if (lmsResult == "false")
+    alertScormError("LMSSetValue(\"cmi.core.lesson_status\",\"" + lessonStatus + "\")");
 
 
-  // lmsResult = lmsAPI.LMSSetValue("cmi.core.score.raw",score);
-  // if (lmsResult == "false")
-  //   alertScormError("LMSSetValue(\"cmi.core.score.raw\",\"" + score + "\")");
+  lmsResult = lmsAPI.LMSSetValue("cmi.core.score.raw",score);
+  if (lmsResult == "false")
+    alertScormError("LMSSetValue(\"cmi.core.score.raw\",\"" + score + "\")");
 
   // lessonStatus = lmsAPI.LMSGetValue("cmi.core.lesson_status");
   // score = lmsAPI.LMSGetValue("cmi.core.score.raw");
