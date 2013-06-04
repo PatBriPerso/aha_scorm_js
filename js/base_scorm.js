@@ -22,6 +22,8 @@ var findAPITries = 0;
 var timerId = null;
 var userId = null;
 var reportTimer = null;
+var scorm_initialized = false;
+
 
 // Reconfigure the following items to customize to the client.
 var scormSrv = "found.pagekite.me"
@@ -205,6 +207,8 @@ function SCORM_INIT() {
 }
 
 $(document).ready(function(){
+  alert("document ready again")
+  alert($(document))
   var css = " \
   iframe { border: none; width: 100%; height: 100%; overflow: scroll;} \
   body {margin: 0; padding: 0; } \
@@ -215,8 +219,10 @@ $(document).ready(function(){
   $("head").append('<style type="text/css">' + css + '</style>');
 
   console.log("calling SCORM INIT once, i hope")
-  alert("calling Scorm init")
-  SCORM_INIT();
+  if (scorm_initialized == false) {
+    SCORM_INIT();
+    scorm_initialized = true;    
+  }
   // $("body").html('<iframe src="//found.pagekite.me/external_sco?func=get_param&courseID=4&orgID=1&extID=admin&orgKey=6F5RMU26D&lastname=Ruoto&firstname=Joe"></iframe>');
   // console.log("I made a hard iframe and a div#scoreCheckFrame") 
 });
